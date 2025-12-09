@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  username  String   @unique
+  password  String
+  role      String   @default("STAFF") // ADMIN, STAFF
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  bills     Bill[]
+}
+
+model Item {
+  id            String     @id @default(cuid())
+  name          String
+  category      String
+  purchasePrice Float
+  sellingPrice  Float
+  unit          String // meter, piece
+  stock         Float      @default(0)
+  minStock      Float      @default(5)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  billItems     BillItem[]
+  stockLogs     StockLog[]
+}
+
+model StockLog {
+  id        String   @id @default(cuid())
+  itemId    String
+  item      Item     @relation(fields: [itemId], references: [id])
+  change    Float // + for add, - for sold
+  type      String // PURCHASE, SALE, ADJUSTMENT
+  note      String?
+  createdAt DateTime @default(now())
+}
+
+model Bill {
+  id             Int       @id @default(autoincrement())
+  billNumber     Int
+  customerName   String?
+  customerPhone  String?
+  total          Float
+  discount       Float     @default(0)
+  tax            Float     @default(0)
+  netTotal       Float
+  paymentMode    String    @default("CASH") // CASH, UPI, CARD
+  createdAt      DateTime  @default(now())
+  createdById    String?
+  createdBy      User?     @relation(fields: [createdById], references: [id])
+  items          BillItem[]
+}
+
+
+model BillItem {
+  id     String @id @default(cuid())
+  billId  Int
+  bill   Bill   @relation(fields: [billId], references: [id])
+  itemId String
+  item   Item   @relation(fields: [itemId], references: [id])
+  name   String // Snapshot of name at time of sale
+  qty    Float
+  price  Float // Price at time of sale
+  total  Float
+}
+
+model Settings {
+  id          String @id @default("1")
+  shopName    String
+  address     String?
+  phone       String?
+  gst         String?
+  logoUrl     String?
+}
