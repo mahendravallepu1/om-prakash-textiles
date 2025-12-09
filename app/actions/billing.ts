@@ -22,9 +22,17 @@ type BillData = {
 export async function createBill(data: BillData) {
     // Use transaction to ensure stock is reduced and bill is saved together
     const bill = await prisma.$transaction(async (tx) => {
-        // 1. Create Bill
+        // 1. Generate Bill Number
+        const lastBill = await tx.bill.findFirst({
+            orderBy: { id: 'desc' },
+            select: { billNumber: true }
+        });
+        const nextBillNumber = (lastBill?.billNumber ?? 0) + 1;
+
+        // 2. Create Bill
         const newBill = await tx.bill.create({
             data: {
+                billNumber: nextBillNumber,
                 customerName: data.customerName,
                 customerPhone: data.customerPhone,
                 total: data.total,

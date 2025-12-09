@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Search, Trash, Check, Print } from "lucide-react";
+import { Search, Trash, Check, Printer } from "lucide-react";
 import { createBill } from "@/app/actions/billing";
 
 type Item = {
@@ -126,7 +126,7 @@ export function POSInterface({ items }: { items: Item[] }) {
                             <span>₹{lastBill.netTotal.toFixed(2)}</span>
                         </div>
                         <Button onClick={() => window.print()} className="w-full mt-4">
-                            <Print className="mr-2 h-4 w-4" /> Print
+                            <Printer className="mr-2 h-4 w-4" /> Print
                         </Button>
                         <Button variant="outline" onClick={() => setLastBill(null)} className="w-full mt-2">
                             New Bill
