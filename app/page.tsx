@@ -6,59 +6,58 @@ import { Shirt, Scissors, ShoppingBag, Star } from "lucide-react";
 export default function Home() {
     return (
         <main className="min-h-screen bg-black overflow-hidden relative flex items-center justify-center">
-            {/* Navigation (Minimal) */}
-            <nav className="fixed top-0 w-full z-50 p-6 flex justify-end">
+            {/* Top Right Login (No Header) */}
+            <div className="absolute top-6 right-6 z-50">
                 <Link href="/login">
-                    <Button variant="ghost" className="text-white/50 hover:text-white transition-colors">
+                    <Button variant="ghost" className="text-amber-200/60 hover:text-amber-100 hover:bg-amber-900/20 transition-all font-light tracking-wider uppercase text-sm">
                         Login
                     </Button>
                 </Link>
-            </nav>
+            </div>
 
             {/* Background Animations */}
             <div className="absolute inset-0 overflow-hidden">
                 {/* Dark Woven Pattern */}
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/black-linen.png')] opacity-40"></div>
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/black-linen.png')] opacity-60"></div>
 
-                {/* Spotlight effects */}
-                <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-900/10 rounded-full blur-[120px] animate-pulse-slow"></div>
-                <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-purple-900/10 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '4s' }}></div>
+                {/* Gold/Warm Spotlights */}
+                <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-amber-600/10 rounded-full blur-[120px] animate-pulse-slow"></div>
+                <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-yellow-600/5 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '4s' }}></div>
 
-                {/* Floating "Ghost" Elements */}
+                {/* Floating "Ghost" Elements (Subtle Gold Tint) */}
                 <div className="absolute inset-0 opacity-10">
-                    <Shirt className="absolute top-[15%] left-[15%] h-32 w-32 text-white animate-float duration-[10s]" />
-                    <Scissors className="absolute bottom-[20%] right-[20%] h-24 w-24 text-white animate-float-delayed duration-[12s]" />
-                    <ShoppingBag className="absolute top-[25%] right-[25%] h-20 w-20 text-white animate-float duration-[15s]" />
+                    <Shirt className="absolute top-[15%] left-[15%] h-32 w-32 text-amber-100 animate-float duration-[10s]" />
+                    <Scissors className="absolute bottom-[20%] right-[20%] h-24 w-24 text-amber-100 animate-float-delayed duration-[12s]" />
+                    <ShoppingBag className="absolute top-[25%] right-[25%] h-20 w-20 text-amber-100 animate-float duration-[15s]" />
                     {/* Abstract shapes representing fabric rolls */}
-                    <div className="absolute bottom-[30%] left-[30%] h-40 w-12 bg-white/5 rounded-full rotate-45 animate-float-delayed duration-[18s]"></div>
-                    <div className="absolute top-[40%] right-[10%] h-32 w-8 bg-white/5 rounded-full -rotate-12 animate-float duration-[14s]"></div>
+                    <div className="absolute bottom-[30%] left-[30%] h-40 w-12 bg-amber-100/10 rounded-full rotate-45 animate-float-delayed duration-[18s]"></div>
+                    <div className="absolute top-[40%] right-[10%] h-32 w-8 bg-amber-100/10 rounded-full -rotate-12 animate-float duration-[14s]"></div>
                 </div>
             </div>
 
             {/* Main Content */}
-            <div className="relative z-10 text-center px-4">
-                <div className="mb-6 animate-fade-in-up">
-                    <div className="mx-auto bg-white/10 w-20 h-20 rounded-2xl flex items-center justify-center backdrop-blur-md mb-8 border border-white/5 shadow-2xl shadow-blue-900/20">
-                        <Image src="/logo.png" alt="Logo" width={48} height={48} className="object-contain invert brightness-0" />
+            <div className="relative z-10 text-center px-4 flex flex-col items-center">
+                <div className="mb-8 animate-fade-in-up">
+                    <div className="mx-auto w-24 h-24 flex items-center justify-center mb-6">
+                        <Image src="/logo.png" alt="Logo" width={80} height={80} className="object-contain invert brightness-0 sepia saturate-100 hue-rotate-[5deg]" />
                     </div>
                 </div>
 
-                <h1 className="text-5xl md:text-8xl font-bold tracking-tighter text-white drop-shadow-2xl animate-fade-in-up delay-100 font-serif">
-                    <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50">
+                <h1 className="text-5xl md:text-8xl font-bold tracking-tighter drop-shadow-2xl animate-fade-in-up delay-100 font-serif">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600">
                         Om Prakash
                     </span>
                     <br />
-                    <span className="text-3xl md:text-5xl font-light tracking-widest uppercase text-white/40 mt-4 block">
+                    <span className="text-4xl md:text-6xl font-light tracking-[0.2em] text-amber-100/80 mt-2 block uppercase">
                         Textiles
                     </span>
                 </h1>
 
-                <div className="mt-16 animate-fade-in-up delay-300">
-                    <Link href="/login">
-                        <Button className="rounded-full px-8 py-6 bg-white text-black hover:bg-white/90 text-lg transition-all hover:scale-105 hover:shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">
-                            Enter Portal
-                        </Button>
-                    </Link>
+                <div className="mt-8 animate-fade-in-up delay-300">
+                    <div className="h-px w-24 mx-auto bg-gradient-to-r from-transparent via-amber-500 to-transparent mb-4"></div>
+                    <p className="text-amber-200/60 font-light tracking-[0.3em] uppercase text-sm">
+                        Premium Textile Management
+                    </p>
                 </div>
             </div>
         </main>
