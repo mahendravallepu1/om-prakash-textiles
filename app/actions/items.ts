@@ -36,11 +36,11 @@ export async function createItem(formData: FormData) {
         },
     });
 
-    revalidatePath("/items");
+    revalidatePath("/", "layout");
     redirect("/items");
 }
 
 export async function deleteItem(id: string) {
     await prisma.item.delete({ where: { id } });
-    revalidatePath("/items");
+    revalidatePath("/", "layout");
 }

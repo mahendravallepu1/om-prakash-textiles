@@ -25,6 +25,7 @@ export function POSInterface({ items }: { items: Item[] }) {
     const [cart, setCart] = useState<CartItem[]>([]);
     const [customer, setCustomer] = useState({ name: "", phone: "" });
     const [discount, setDiscount] = useState(0);
+    const [discountType, setDiscountType] = useState<"amount" | "percent">("amount");
     const [loading, setLoading] = useState(false);
     const [lastBill, setLastBill] = useState<any>(null);
 
@@ -63,7 +64,8 @@ export function POSInterface({ items }: { items: Item[] }) {
     };
 
     const subTotal = cart.reduce((sum, i) => sum + i.total, 0);
-    const netTotal = subTotal - discount; // Tax needed? Let's keep simpler for now or assume inclusive
+    const discountAmount = discountType === "percent" ? (subTotal * discount / 100) : discount;
+    const netTotal = Math.max(0, subTotal - discountAmount);
 
     const handleCheckout = async () => {
         if (cart.length === 0) return;
@@ -80,14 +82,14 @@ export function POSInterface({ items }: { items: Item[] }) {
                     total: i.total
                 })),
                 total: subTotal,
-                discount: discount,
+                discount: discountAmount,
                 tax: 0,
                 netTotal: netTotal,
                 paymentMode: "CASH", // Default
             });
 
             if (res.success) {
-                setLastBill({ ...res, customer, cart, subTotal, discount, netTotal });
+                setLastBill({ ...res, customer, cart, subTotal, discountAmount, netTotal });
                 setCart([]);
                 setCustomer({ name: "", phone: "" });
                 setDiscount(0);
@@ -259,16 +261,37 @@ export function POSInterface({ items }: { items: Item[] }) {
                             </div>
                             <div className="flex justify-between items-center text-sm gap-4">
                                 <span className="text-muted-foreground">Discount</span>
-                                <div className="flex items-center w-24 border rounded-md bg-background px-2">
-                                    <span className="text-muted-foreground mr-1">₹</span>
-                                    <Input
-                                        type="number"
-                                        className="h-7 w-full border-none p-0 text-right focus-visible:ring-0"
-                                        value={discount}
-                                        onChange={(e) => setDiscount(parseFloat(e.target.value) || 0)}
-                                    />
+                                <div className="flex items-center gap-2">
+                                    <div className="flex border rounded-md overflow-hidden bg-background">
+                                        <button
+                                            className={`px-2 py-1 text-xs ${discountType === "amount" ? "bg-primary text-primary-foreground" : "hover:bg-muted"}`}
+                                            onClick={() => setDiscountType("amount")}
+                                        >
+                                            ₹
+                                        </button>
+                                        <button
+                                            className={`px-2 py-1 text-xs ${discountType === "percent" ? "bg-primary text-primary-foreground" : "hover:bg-muted"}`}
+                                            onClick={() => setDiscountType("percent")}
+                                        >
+                                            %
+                                        </button>
+                                    </div>
+                                    <div className="flex items-center w-20 border rounded-md bg-background px-2">
+                                        <Input
+                                            type="number"
+                                            className="h-7 w-full border-none p-0 text-right focus-visible:ring-0"
+                                            value={discount}
+                                            onChange={(e) => setDiscount(parseFloat(e.target.value) || 0)}
+                                        />
+                                    </div>
                                 </div>
                             </div>
+                            {discount > 0 && (
+                                <div className="flex justify-between items-center text-xs text-muted-foreground">
+                                    <span>Discount Amount</span>
+                                    <span>-₹{discountAmount.toFixed(2)}</span>
+                                </div>
+                            )}
                             <div className="flex justify-between items-center text-xl font-bold border-t pt-2 text-primary">
                                 <span>Net Total</span>
                                 <span>₹{netTotal.toFixed(2)}</span>
