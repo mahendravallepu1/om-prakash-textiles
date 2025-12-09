@@ -11,6 +11,8 @@ import { AddItemDialog } from "@/components/items/AddItemDialog";
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export default async function ItemsPage() {
     const items = await getItems();
 

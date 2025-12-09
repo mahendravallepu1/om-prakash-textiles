@@ -13,6 +13,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertTriangle } from "lucide-react";
 import { format } from "date-fns";
 
+export const dynamic = "force-dynamic";
+
 export default async function StockPage() {
     const logs = await getStockLogs();
     const lowStockItems = await getLowStockItems();
@@ -34,7 +36,7 @@ export default async function StockPage() {
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-2">
-                            {lowStockItems.map(item => (
+                            {lowStockItems.map((item: any) => (
                                 <div key={item.id} className="flex justify-between items-center bg-white p-2 rounded border border-red-100">
                                     <span className="font-medium text-red-900">{item.name}</span>
                                     <span className="text-sm text-red-700">Stock: {item.stock} {item.unit} (Min: {item.minStock})</span>
@@ -59,7 +61,7 @@ export default async function StockPage() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {logs.map((log) => (
+                            {logs.map((log: any) => (
                                 <TableRow key={log.id}>
                                     <TableCell>{format(log.createdAt, "dd MMM yyyy HH:mm")}</TableCell>
                                     <TableCell className="font-medium">{log.item.name}</TableCell>

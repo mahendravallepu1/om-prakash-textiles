@@ -19,6 +19,8 @@ async function getDailyReports() {
     });
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function ReportsPage() {
     const bills = await getDailyReports();
     const totalSales = bills.reduce((sum, bill) => sum + bill.netTotal, 0);
