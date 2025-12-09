@@ -23,9 +23,9 @@ export default async function ItemsPage() {
                 <AddItemDialog />
             </div>
 
-            <div className="border rounded-md">
+            <div className="border rounded-xl bg-card shadow-sm overflow-hidden">
                 <Table>
-                    <TableHeader>
+                    <TableHeader className="bg-muted/50">
                         <TableRow>
                             <TableHead>Name</TableHead>
                             <TableHead>Category</TableHead>
@@ -37,18 +37,31 @@ export default async function ItemsPage() {
                     </TableHeader>
                     <TableBody>
                         {items.map((item) => (
-                            <TableRow key={item.id}>
-                                <TableCell className="font-medium">{item.name}</TableCell>
-                                <TableCell>{item.category}</TableCell>
-                                <TableCell>₹{item.sellingPrice}</TableCell>
-                                <TableCell>{item.stock}</TableCell>
-                                <TableCell>{item.unit}</TableCell>
+                            <TableRow className="hover:bg-muted/50 transition-colors">
+                                <TableCell className="font-medium">
+                                    <div className="flex flex-col">
+                                        <span>{item.name}</span>
+                                        <span className="md:hidden text-xs text-muted-foreground">Stock: {item.stock}</span>
+                                    </div>
+                                </TableCell>
+                                <TableCell>
+                                    <span className="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                                        {item.category}
+                                    </span>
+                                </TableCell>
+                                <TableCell className="font-semibold text-foreground">₹{item.sellingPrice}</TableCell>
+                                <TableCell className="hidden md:table-cell">
+                                    <span className={item.stock < 5 ? "text-red-500 font-bold" : "text-green-600"}>
+                                        {item.stock}
+                                    </span>
+                                </TableCell>
+                                <TableCell className="hidden md:table-cell text-muted-foreground">{item.unit}</TableCell>
                                 <TableCell className="text-right">
                                     <form action={async () => {
                                         "use server";
                                         await deleteItem(item.id);
                                     }}>
-                                        <Button variant="ghost" size="icon" className="text-red-500">
+                                        <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive hover:bg-destructive/10">
                                             <Trash className="h-4 w-4" />
                                         </Button>
                                     </form>
