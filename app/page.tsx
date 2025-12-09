@@ -18,18 +18,18 @@ export default function Home() {
             {/* Background Hero Image */}
             <div className="absolute inset-0 z-0">
                 <Image
-                    src="/hero-saree.png"
+                    src="/hero-saree-2.jpg"
                     alt="Traditional Saree Collection"
                     fill
-                    className="object-cover object-top opacity-80 brightness-75 scale-105 animate-slow-zoom"
+                    className="object-cover object-top opacity-90 brightness-90 scale-105 animate-slow-zoom"
                     priority
                 />
                 {/* Gradient Overlays for Readability */}
-                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40"></div>
 
                 {/* Traditional Pattern Overlay */}
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/black-linen.png')] opacity-20 mix-blend-overlay"></div>
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/black-linen.png')] opacity-10 mix-blend-overlay"></div>
             </div>
 
             {/* Main Content */}
@@ -38,35 +38,27 @@ export default function Home() {
                 {/* Decorative Element */}
                 <div className="flex items-center gap-4 mb-6 opacity-80 animate-fade-in-up">
                     <div className="h-[1px] w-12 bg-amber-400"></div>
-                    <span className="uppercase tracking-[0.4em] text-xs text-amber-300 font-sans">Heritage & Tradition</span>
+                    <span className="uppercase tracking-[0.4em] text-xs text-amber-300 font-sans shadow-black drop-shadow-md">Heritage & Tradition</span>
                     <div className="h-[1px] w-12 bg-amber-400"></div>
                 </div>
 
                 <h1 className="text-6xl md:text-8xl lg:text-9xl font-medium tracking-tight leading-none text-white drop-shadow-2xl animate-fade-in-up delay-100">
-                    <span className="block text-amber-50">Om Prakash</span>
-                    <span className="block italic text-amber-200 ml-4 md:ml-24 font-light">Textiles</span>
+                    <span className="block text-amber-50 drop-shadow-lg">Om Prakash</span>
+                    <span className="block italic text-amber-200 ml-4 md:ml-24 font-light drop-shadow-lg">Textiles</span>
                 </h1>
 
-                <p className="mt-8 text-lg md:text-xl text-amber-100/80 max-w-xl leading-relaxed animate-fade-in-up delay-200 font-sans font-light">
+                <p className="mt-8 text-lg md:text-xl text-amber-50/90 max-w-xl leading-relaxed animate-fade-in-up delay-200 font-sans font-light drop-shadow-md">
                     Where golden threads weave stories of elegance. <br />
                     Discover our premium collection of authentic Indian handlooms, crafted for timeless grace.
                 </p>
 
-                <div className="mt-12 flex flex-col sm:flex-row gap-6 animate-fade-in-up delay-300">
-                    <Link href="/login">
-                        <Button className="h-14 px-10 bg-amber-600 hover:bg-amber-700 text-white rounded-none tracking-widest uppercase text-sm font-sans relative overflow-hidden group shadow-[0_0_30px_rgba(217,119,6,0.3)] transition-all hover:scale-105">
-                            <span className="relative z-10 flex items-center gap-2">
-                                Explore Collection
-                            </span>
-                            <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        </Button>
-                    </Link>
-
-                    <div className="flex items-center gap-2 text-amber-200/80 text-sm font-sans tracking-wide">
+                <div className="mt-12 animate-fade-in-up delay-300">
+                    <div className="flex items-center gap-2 text-amber-200/90 text-sm font-sans tracking-wide">
                         <Star className="h-4 w-4 fill-amber-200 text-amber-200" />
                         <span>Premium Quality Guaranteed</span>
                     </div>
                 </div>
+
 
                 {/* Floating Traditional Motifs */}
                 <div className="absolute bottom-10 right-10 animate-float-delayed opacity-50 hidden md:block">
