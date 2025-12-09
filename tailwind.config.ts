@@ -72,6 +72,10 @@ const config: Config = {
                 scroll: {
                     to: { transform: "translate(calc(-50% - 0.5rem))" },
                 },
+                "slow-zoom": {
+                    "0%": { transform: "scale(1.05)" },
+                    "100%": { transform: "scale(1.15)" },
+                },
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
@@ -81,6 +85,7 @@ const config: Config = {
                 "pulse-slow": "pulse-slow 8s ease-in-out infinite",
                 shimmer: "shimmer 8s linear infinite",
                 scroll: "scroll 40s linear infinite",
+                "slow-zoom": "slow-zoom 20s ease-in-out infinite alternate",
             },
         },
     },
