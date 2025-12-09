@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
@@ -32,11 +33,16 @@ export default function Sidebar({ isMobile = false }: { isMobile?: boolean }) {
       "h-full flex-col border-r bg-card text-card-foreground",
       isMobile ? "flex w-full" : "hidden md:flex w-64"
     )}>
-      <div className="p-6 border-b">
-        <h1 className="text-xl font-bold tracking-wide text-primary">
-          OM PRAKASH
-        </h1>
-        <p className="text-xs text-muted-foreground mt-1">Textiles & Inventory</p>
+      <div className="p-6 border-b flex items-center gap-3">
+        <div className="bg-white p-1.5 rounded-lg shadow-sm">
+          <Image src="/logo.png" alt="Logo" width={40} height={40} className="object-contain" />
+        </div>
+        <div>
+          <h1 className="text-lg font-bold tracking-wide text-primary leading-tight">
+            OM PRAKASH
+          </h1>
+          <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Textiles</p>
+        </div>
       </div>
 
       <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
