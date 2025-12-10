@@ -1,15 +1,32 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Package, ShoppingCart, TrendingUp, AlertTriangle } from "lucide-react";
+import { Package, ShoppingCart, TrendingUp, AlertTriangle, LogOut } from "lucide-react";
 import { getDashboardStats } from "@/app/actions/dashboard";
+import { auth, signOut } from "@/auth";
+import { Button } from "@/components/ui/button";
 
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
+    const session = await auth();
     const stats = await getDashboardStats();
 
     return (
         <div className="space-y-6">
-            <h1 className="text-3xl font-bold">Dashboard</h1>
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h1 className="text-3xl font-bold">Dashboard</h1>
+                    <p className="text-muted-foreground">Welcome back, {session?.user?.name || session?.user?.email || "User"}</p>
+                </div>
+                <form action={async () => {
+                    "use server"
+                    await signOut({ redirectTo: "/login" })
+                }}>
+                    <Button variant="outline" className="gap-2">
+                        <LogOut className="h-4 w-4" />
+                        Logout
+                    </Button>
+                </form>
+            </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <Card className="glass relative overflow-hidden transition-all hover:-translate-y-1 hover:shadow-xl border-t-4 border-t-primary">

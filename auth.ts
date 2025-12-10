@@ -1,14 +1,19 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import { z } from "zod";
 import prisma from "@/lib/prisma";
-
-// Mock bcrypt for now since we can't install it, but in real app use bcrypt
-// const bcrypt = require('bcrypt');
-// For now, simple string comparison for demo until env is fixed
+import bcrypt from "bcryptjs";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+    adapter: PrismaAdapter(prisma),
+    session: { strategy: "jwt" }, // Use JWT for easier handling with simple credentials mixed in
     providers: [
+        Google({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        }),
         Credentials({
             credentials: {
                 username: { label: "Username", type: "text" },
@@ -27,22 +32,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     where: { username },
                 });
 
-                if (!user) return null;
+                if (!user || !user.password) return null;
 
-                // Verify password (plain text for now as we lack bcrypt, TODO: fix)
-                if (user.password !== password) return null;
+                // Verify password securely
+                const passwordsMatch = await bcrypt.compare(password, user.password);
+                if (!passwordsMatch) return null;
 
-                return {
-                    id: user.id,
-                    name: user.name,
-                    username: user.username,
-                    role: user.role,
-                };
+                return user;
             },
         }),
     ],
     callbacks: {
-        jwt({ token, user }) {
+        jwt({ token, user, trigger, session }) {
+            // Handle session updates if needed
+            if (trigger === "update" && session?.name) {
+                token.name = session.name;
+            }
+
             if (user) {
                 token.id = user.id;
                 // @ts-ignore
@@ -53,18 +59,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             return token;
         },
         session({ session, token }) {
-            if (token) {
+            if (token && session.user) {
                 // @ts-ignore
-                session.user.id = token.id;
+                session.user.id = token.id as string;
                 // @ts-ignore
-                session.user.role = token.role;
+                session.user.role = token.role as string;
                 // @ts-ignore
-                session.user.username = token.username;
+                session.user.username = token.username as string;
             }
             return session;
         },
     },
     pages: {
         signIn: "/login",
+        error: "/login" // Redirect to login on error
     },
 });
