@@ -72,7 +72,7 @@ export default function Sidebar({ isMobile = false }: { isMobile?: boolean }) {
         <Button
           variant="ghost"
           className="w-full justify-start gap-3 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-          onClick={() => signOut()}
+          onClick={() => signOut({ callbackUrl: "/login" })}
         >
           <LogOut className="h-4 w-4" />
           Logout

@@ -3,6 +3,7 @@ import { Package, ShoppingCart, TrendingUp, AlertTriangle, LogOut } from "lucide
 import { getDashboardStats } from "@/app/actions/dashboard";
 import { auth, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -19,7 +20,8 @@ export default async function DashboardPage() {
                 </div>
                 <form action={async () => {
                     "use server"
-                    await signOut({ redirectTo: "/login" })
+                    await signOut({ redirect: false })
+                    redirect("/login")
                 }}>
                     <Button variant="outline" className="gap-2">
                         <LogOut className="h-4 w-4" />
